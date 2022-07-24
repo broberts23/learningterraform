@@ -18,9 +18,15 @@ provider "azurerm" {
   features {}
 }
 
+# Generate random text for a unique storage account name
+resource "random_id" "randomId" {
+  byte_length = 8
+}
+
+
 #Create a resource group
 resource "azurerm_resource_group" "rg" {
-  name     = var.resource_group_name
+  name     = "${random_id.randomId.hex}-rg"
   location = var.location
   tags = {
     Environment = "Terraform Getting Started"
@@ -100,12 +106,21 @@ resource "azurerm_network_interface_security_group_association" "example" {
   network_security_group_id = azurerm_network_security_group.sg.id
 }
 
+# Create storage account for boot diagnostics
+resource "azurerm_storage_account" "mystorageaccount" {
+  name                     = "diag${random_id.randomId.hex}"
+  location                 = azurerm_resource_group.rg.location
+  resource_group_name      = azurerm_resource_group.rg.name
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+}
+
 # Create a linux VM
 resource "azurerm_linux_virtual_machine" "linuxvm1" {
-  name                            = "terraformlabslinuxvm"
+  name                            = "vm${random_id.randomId.hex}"
   resource_group_name             = azurerm_resource_group.rg.name
   location                        = var.location
-  size                            = "Standard_F2"
+  size                            = var.vmsize
   computer_name                   = "myvm"
   admin_username                  = "azureuser"
   disable_password_authentication = true
@@ -127,5 +142,8 @@ resource "azurerm_linux_virtual_machine" "linuxvm1" {
     sku       = "16.04-LTS"
     version   = "latest"
   }
-
+  boot_diagnostics {
+    storage_account_uri = azurerm_storage_account.mystorageaccount.primary_blob_endpoint
+  }
 }
+

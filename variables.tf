@@ -1,13 +1,17 @@
 variable "resource_group_name" {
-  default = "rg"
+  default = null
 }
 
 variable "azurerm_virtual_network" {
-  default = "Vnet"
+  default = null
 }
 
 variable "location" {
-  default = "australiaeast"
+  default = null
+}
+
+variable "vmsize" {
+  default = null
 }
 
 variable "ARM_SUBSCRIPTION_ID" {
@@ -21,6 +25,11 @@ variable "ARM_CLIENT_SECRET" {
 }
 
 variable "ARM_CLIENT_ID" {
+  type    = string
+  default = ""
+}
+
+variable "resource_group_name_id" {
   type    = string
   default = ""
 }
