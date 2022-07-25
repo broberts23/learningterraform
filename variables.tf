@@ -3,7 +3,7 @@ variable "resource_group_name" {
 }
 
 variable "azurerm_virtual_network" {
-  default = null
+  default = "Vnet"
 }
 
 variable "location" {
