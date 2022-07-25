@@ -7,10 +7,12 @@ variable "azurerm_virtual_network" {
 }
 
 variable "location" {
+  type = terraform
   default = null
 }
 
 variable "vmsize" {
+  type = terraform
   default = null
 }
 
