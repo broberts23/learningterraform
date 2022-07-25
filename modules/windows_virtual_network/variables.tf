@@ -13,7 +13,7 @@ variable "location" {
 
 
 variable "vmsize" {
-  default = "Standard_F2"
+  default = "Standard_DS1_v2"
 }
 
 locals {

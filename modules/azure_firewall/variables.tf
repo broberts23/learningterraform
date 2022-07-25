@@ -1,5 +1,5 @@
 variable "azurerm_virtual_network2" {
-  default = "Internal Hub vNet"
+  default = "firewallvNet"
 }
 
 variable "location" {
