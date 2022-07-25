@@ -7,13 +7,11 @@ variable "azurerm_virtual_network" {
 }
 
 variable "location" {
-  type = "terraform"
-  default = null
+  default = "australiaeast"
 }
 
 variable "vmsize" {
-  type = "terraform"
-  default = null
+  default = "Standard_F2"
 }
 
 variable "ARM_SUBSCRIPTION_ID" {
